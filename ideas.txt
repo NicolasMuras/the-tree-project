@@ -1,8 +1,0 @@
-Programa para generar arboles en 2d de forma automatica.
-
-Parametros de entrada:
-    * Edad del arbol
-    * Especie de arbol
-
-Salida (o resultado):
-    Imagen de arbol generada automaticamente.

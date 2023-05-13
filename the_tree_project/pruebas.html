@@ -11,18 +11,26 @@
   <button>Generar</button>
   
   <div class="triangle" id="triangle1"></div>
-  <div class="triangle" id="triangle2"></div>
 
   <script>
     // Función para realizar la llamada GET al recurso del backend
     function obtenerRecursos() {
-      fetch('http://127.0.0.1:8000/square/3/', { method: 'GET' })
+      fetch('http://127.0.0.1:8000/square/1/', { method: 'GET' })
         .then(function(response) {
           return response.json();
         })
         .then(function(data) {
           // Manipula los datos obtenidos del backend según tus necesidades
-          document.getElementById('result').innerHTML = JSON.stringify(data);
+          console.log(data.triangles[0].coordinates);
+          
+          // Obtén la referencia a cada triángulo por su clase o id
+          const triangle1 = document.getElementById('triangle1');
+          
+          // Extrae los valores de las coordenadas de cada triángulo del resultado
+          const triangle1Coordinates = data.triangles[0].coordinates;
+
+          // Ejemplo de cambio de valores para cada triángulo
+          changePolygon(triangle1, triangle1Coordinates[0].x, triangle1Coordinates[0].y, triangle1Coordinates[1].x, triangle1Coordinates[1].y, triangle1Coordinates[2].x, triangle1Coordinates[2].y);
         })
         .catch(function(error) {
           console.log('Error:', error);
@@ -32,21 +40,11 @@
     // Llama a la función para obtener los recursos al cargar la página
     window.onload = obtenerRecursos;
 
-    // Obtén la referencia a cada triángulo por su clase o id
-    const triangle1 = document.getElementById('triangle1');
-    const triangle2 = document.getElementById('triangle2');
-
     // Función para cambiar los valores de la función polygon para un triángulo específico
     function changePolygon(element, x1, y1, x2, y2, x3, y3) {
       const polygonValue = `${x1}px ${y1}px, ${x2}px ${y2}px, ${x3}px ${y3}px`;
       element.style.clipPath = `polygon(${polygonValue})`;
     }
-
-    // Ejemplo de cambio de valores para cada triángulo
-    changePolygon(triangle1, 0, 300, 0, 0, 300, 300);
-    changePolygon(triangle2, 0, 0, 300, 0, 300, 300);
   </script>
 </body>
 </html>
-
-
