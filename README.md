@@ -1,3 +1,4 @@
+![alt text](https://github.com/NicolasMuras/the-tree-project/blob/main/banner_tree_project.jpg?raw=true)
 <h2>Ideas</h2>
 
 Programa para generar arboles en 2d de forma automatica.
