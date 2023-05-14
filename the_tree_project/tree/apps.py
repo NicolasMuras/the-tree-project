@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class SquareConfig(AppConfig):
-    name = 'Square'
+class TreeConfig(AppConfig):
+    name = 'tree'
