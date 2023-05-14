@@ -13,6 +13,8 @@ class Triangle(models.Model):
 
 class Square(models.Model):
     triangles = models.ManyToManyField(Triangle)
+    size = models.IntegerField()
+    color = models.CharField(max_length=20)
 
     def get_triangles(self):
         return "\n".join([str(t) for t in self.triangles.all()])
