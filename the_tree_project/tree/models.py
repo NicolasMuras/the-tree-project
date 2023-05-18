@@ -15,6 +15,7 @@ class Square(models.Model):
     triangles = models.ManyToManyField(Triangle)
     size = models.IntegerField()
     color = models.CharField(max_length=20)
+    rotation = models.FloatField()
 
     def get_triangles(self):
         return "\n".join([str(t) for t in self.triangles.all()])

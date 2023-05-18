@@ -2,11 +2,12 @@
 const botonEnviar = document.getElementById('enviar');
 console.log(botonEnviar)
 // Función para cambiar los valores de la función polygon para un triángulo específico
-function changePolygon(element, x1, y1, x2, y2, x3, y3, new_color, width, height) {
+function changePolygon(element, x1, y1, x2, y2, x3, y3, new_color, width, height, rotation) {
     const polygonValue = `${x1}px ${y1}px, ${x2}px ${y2}px, ${x3}px ${y3}px`;
     element.style.clipPath = `polygon(${polygonValue})`;
     element.style.width = `${width}px`
     element.style.height = `${height}px`
+    element.style.transform = `rotate(${rotation}deg)`;
     element.style.background = new_color
 }
   
@@ -27,9 +28,10 @@ function obtenerDatos(generated_id) {
         // Extrae los valores de las coordenadas de cada triángulo del resultado
         const triangle1Coordinates = data.triangles[0].coordinates;
         const new_color = data.color;
+        const rotations = data.rotation;
 
         // Ejemplo de cambio de valores para cada triángulo
-        changePolygon(triangle1, triangle1Coordinates[0].x, triangle1Coordinates[0].y, triangle1Coordinates[1].x, triangle1Coordinates[1].y, triangle1Coordinates[2].x, triangle1Coordinates[2].y, new_color);
+        changePolygon(triangle1, triangle1Coordinates[0].x, triangle1Coordinates[0].y, triangle1Coordinates[1].x, triangle1Coordinates[1].y, triangle1Coordinates[2].x, triangle1Coordinates[2].y, new_color, rotations);
         })
         .catch(function(error) {
         console.log('Error:', error);
@@ -41,6 +43,7 @@ function enviarDatos() {
     const color = document.getElementById('color').value;
     const height = document.getElementById('height').value;
     const width = document.getElementById('width').value;
+    const rotation = document.getElementById('rotation').value
     const triangle_height = 100 * height;
     const triangle_width = 100 * width;
 
@@ -106,7 +109,8 @@ function enviarDatos() {
         data['triangles'][0]['coordinates'][2]['y'], 
         color,
         triangle_width,
-        triangle_height);
+        triangle_height,
+        rotation);
 
     changePolygon(
         triangle2, 
@@ -118,7 +122,8 @@ function enviarDatos() {
         data['triangles'][1]['coordinates'][2]['y'], 
         color,
         triangle_width,
-        triangle_height);
+        triangle_height,
+        rotation);
 }
 
 // Asociar la función con el evento 'click' del botón
