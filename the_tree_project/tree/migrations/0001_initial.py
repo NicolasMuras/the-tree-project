@@ -32,6 +32,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('size', models.IntegerField()),
                 ('color', models.CharField(max_length=20)),
+                ('rotation', models.FloatField()),
                 ('triangles', models.ManyToManyField(to='tree.Triangle')),
             ],
         ),
