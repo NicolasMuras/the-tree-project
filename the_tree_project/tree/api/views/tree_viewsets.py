@@ -4,13 +4,13 @@ from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from tree.api.serializers.tree_serializers import SquareSerializer
-from tree.models import Square
+from tree.api.serializers.tree_serializers import TrunkSerializer
+from tree.models import Trunk
 
 
-class SquareViewSet(viewsets.ModelViewSet):
-    serializer_class = SquareSerializer
-    model_to_format = "Square"
+class TrunkViewSet(viewsets.ModelViewSet):
+    serializer_class = TrunkSerializer
+    model_to_format = "Trunk"
 
     def get_queryset(self):
         return self.get_serializer().Meta.model.objects

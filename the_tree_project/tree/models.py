@@ -19,3 +19,10 @@ class Square(models.Model):
 
     def get_triangles(self):
         return "\n".join([str(t) for t in self.triangles.all()])
+
+class Trunk(models.Model):
+    square = models.ManyToManyField(Square)
+    
+
+    def get_squares(self):
+        return "\n".join([str(t) for t in self.square.all()])
