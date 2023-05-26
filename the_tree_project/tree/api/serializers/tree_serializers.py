@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from tree.models import Square, Triangle, Coordinate
+from tree.models import Square, Triangle, Coordinate, Trunk
 
 
 class CoordinateSerializer(serializers.ModelSerializer):
@@ -33,25 +33,46 @@ class SquareSerializer(serializers.ModelSerializer):
     def get_triangles(self, instance):
         return list(instance.triangles.values())
     
+
+    
+class TrunkSerializer(serializers.ModelSerializer):
+
+    square = SquareSerializer(many=True)
+
+    class Meta:
+        model = Trunk
+        fields = '__all__'
+    
+    def get_squares(self, instance):
+        return list(instance.squares.values())
+    
+
     def create(self, validated_data):
-        triangles_data = validated_data.pop('triangles', [])
+        squares_data = validated_data.pop('square', [])
         id_custom = validated_data.pop('id_custom', 0)
-        print(id_custom)
-        if id != 0:
-            square = Square.objects.create(id=id_custom, **validated_data)
+        """if id_custom != 0:
+            trunk = Trunk.objects.create(id=id_custom, **validated_data)
         else:
-            square = Square.objects.create(**validated_data)
-        triangle_array = []
-        for triangle_data in triangles_data:
-            coordinates_data = triangle_data.pop('coordinates', [])
-            triangle = Triangle.objects.create(square=square, **triangle_data)
-            triangle_array.append(triangle)
-            coordinate_array = []
-            for coordinate_data in coordinates_data:
-                coordinate = Coordinate.objects.create(triangle=triangle, **coordinate_data)
-                coordinate_array.append(coordinate)
-            triangle.coordinates.set(coordinate_array)
-        square.triangles.set(triangle_array)
-        square.save()
-        return square
+            trunk = Trunk.objects.create(**validated_data)"""
+        trunk = Trunk.objects.create(**validated_data)
+        square_array = []
+        for square_data in squares_data:
+            triangles_data = square_data.pop('triangles', [])
+            square= Square.objects.create(trunk= trunk, **square_data)
+            square_array.append(square)
+            triangle_array = []
+            #import pdb; pdb.set_trace()
+            for triangle_data in triangles_data:
+                coordinates_data = triangle_data.pop('coordinates', [])
+                triangle = Triangle.objects.create(square=square, **triangle_data)
+                triangle_array.append(triangle)
+                coordinate_array = []
+                for coordinate_data in coordinates_data:
+                    coordinate = Coordinate.objects.create(triangle=triangle, **coordinate_data)
+                    coordinate_array.append(coordinate)
+                triangle.coordinates.set(coordinate_array)
+            square.triangles.set(triangle_array)
+        trunk.square.set(square_array)
+        trunk.save()
+        return trunk
 

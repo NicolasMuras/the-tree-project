@@ -123,8 +123,9 @@ function enviarDatos() {
         color,
         triangle_width,
         triangle_height,
-        rotation);
-}
+          rotation);
+
+    }
 
 // Asociar la función con el evento 'click' del botón
 botonEnviar.addEventListener('click', enviarDatos);
